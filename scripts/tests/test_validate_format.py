@@ -133,7 +133,7 @@ class TestValidadeFormat(unittest.TestCase):
 
         self.assertIsInstance(err_msgs, list)
         self.assertEqual(len(err_msgs), 1)
-        
+
         err_msg = err_msgs[0]
         expected_err_msg = '(L001) Title syntax should be "[TITLE](LINK)"'
 
@@ -143,10 +143,10 @@ class TestValidadeFormat(unittest.TestCase):
         raw_title = '[A API](https://www.ex.com)'
 
         err_msgs = check_title(0, raw_title)
-        
+
         self.assertIsInstance(err_msgs, list)
         self.assertEqual(len(err_msgs), 1)
-        
+
         err_msg = err_msgs[0]
         expected_err_msg = '(L001) Title should not end with "... API". Every entry is an API here!'
 
@@ -168,7 +168,7 @@ class TestValidadeFormat(unittest.TestCase):
 
         self.assertIsInstance(err_msgs, list)
         self.assertEqual(len(err_msgs), 1)
-        
+
         err_msg = err_msgs[0]
         expected_err_msg = '(L001) first character of description is not capitalized'
 
@@ -179,7 +179,7 @@ class TestValidadeFormat(unittest.TestCase):
         base_desc = 'This is a fake description'
         punctuation = r"""!"#$%&'*+,-./:;<=>?@[\]^_`{|}~"""
         desc_with_punc = [base_desc + punc for punc in punctuation]
-        
+
         for desc in desc_with_punc:
 
             with self.subTest():
@@ -187,7 +187,7 @@ class TestValidadeFormat(unittest.TestCase):
 
                 self.assertIsInstance(err_msgs, list)
                 self.assertEqual(len(err_msgs), 1)
-        
+
                 err_msg = err_msgs[0]
                 expected_err_msg = f'(L001) description should not end with {desc[-1]}'
 
@@ -248,7 +248,7 @@ class TestValidadeFormat(unittest.TestCase):
                 err_msg_1 = err_msgs[0]
                 err_msg_2 = err_msgs[1]
 
-                expected_err_msg_1 = f'(L001) auth value is not enclosed with `backticks`'
+                expected_err_msg_1 = '(L001) auth value is not enclosed with `backticks`'
                 expected_err_msg_2 = f'(L001) {auth} is not a valid Auth option'
 
                 self.assertIsInstance(err_msg_1, str)
@@ -458,7 +458,10 @@ class TestValidadeFormat(unittest.TestCase):
         ]
 
         err_msgs = check_file_format(lines=incorrect_format)
-        expected_err_msg = f'(L007) each segment must start and end with exactly 1 space'
+        expected_err_msg = (
+            '(L007) each segment must start and end with exactly 1 space'
+        )
+
 
         self.assertIsInstance(err_msgs, list)
         self.assertEqual(len(err_msgs), 1)
